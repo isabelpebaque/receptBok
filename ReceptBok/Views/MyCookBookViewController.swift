@@ -14,16 +14,40 @@ class MyCookBookViewController: UIViewController {
     //Kopplingar till Firebase/Firebase Auth
     let ref = Database.database().reference()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let userdef = UserDefaults.standard
     
     // Outlets skapade från storyboard
     @IBOutlet weak var myCookBookNameLabel: UILabel!
     @IBOutlet weak var myCookBookImageView: UIImageView!
+    
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         getDataFromFirebase()
         downloadImageFromFirebaseStorage()
+    }
+    
+    @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
+        
+        do {
+            try Auth.auth().signOut()
+            self.userdef.set(false, forKey: "UserIsSignedIn")
+            self.userdef.synchronize()
+            openSignInView()
+        }
+        catch let error as NSError {
+            print (error.localizedDescription)
+        }
+        
+    }
+    
+    // Metod som öppnar första inloggningsfönstret
+    func openSignInView(){
+        
+        if let signInView = (self.storyboard!.instantiateViewController(withIdentifier: "firstViewController") as? UIViewController) {
+            self.present(signInView, animated: true, completion: nil)
+        }
     }
     
     // Mark: - Get data from Firebase

@@ -50,7 +50,7 @@ class FirstScreenViewController: UIViewController {
                 self.userdef.synchronize()
                 self.openMainTabBar()
             } else {
-                print("Fel vid inloggning \(String(describing: error))")
+                print("Fel vid inloggning \(error.debugDescription)")
             }
         }
     }
@@ -70,7 +70,7 @@ class FirstScreenViewController: UIViewController {
                 self.userdef.set(true, forKey: "UserIsSignedIn")
                 self.userdef.synchronize()
             }else {
-                print("kunde inte skapa konto! \(String(describing: error))")
+                print("kunde inte skapa konto! \(error.debugDescription)")
             }
         }
         

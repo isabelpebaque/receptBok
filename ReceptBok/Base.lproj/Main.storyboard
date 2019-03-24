@@ -58,7 +58,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Min Receptbok" id="VCZ-g7-EEj"/>
+                    <navigationItem key="navigationItem" title="Min Receptbok" id="VCZ-g7-EEj">
+                        <barButtonItem key="rightBarButtonItem" title="Logga ut" id="9iw-PG-b89">
+                            <connections>
+                                <action selector="signOutButtonPressed:" destination="BYZ-38-t0r" id="Y1C-1V-Ir0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="myCookBookImageView" destination="K7T-f1-l5D" id="UkL-PM-ddV"/>
@@ -170,7 +176,7 @@
         <!--First Screen View Controller-->
         <scene sceneID="tQ7-XI-NA4">
             <objects>
-                <viewController id="SpS-94-bGo" customClass="FirstScreenViewController" customModule="ReceptBok" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="firstViewController" id="SpS-94-bGo" customClass="FirstScreenViewController" customModule="ReceptBok" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iNC-3t-cge">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
