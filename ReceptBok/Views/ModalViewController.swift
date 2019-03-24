@@ -25,7 +25,7 @@ class ModalViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Action skapad från storyboard, vid tryck sparar vi data från våra outlets till Firebase
     @IBAction func saveNewNameBtnPressed(_ sender: UIButton) {
         addDataToFirebase()
-        //uploadToFirestoreStorage()
+        
     }
     
     func addDataToFirebase() {

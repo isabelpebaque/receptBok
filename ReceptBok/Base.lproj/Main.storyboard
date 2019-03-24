@@ -30,12 +30,14 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbV-Vz-NU6">
-                                <rect key="frame" x="96" y="550" width="184" height="30"/>
+                                <rect key="frame" x="73" y="550" width="231" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Skapa din egen receptbok!">
-                                    <color key="titleColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
+                                    <action selector="createCookBookButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xjq-Y1-Sdc"/>
                                     <segue destination="Tjw-X8-rpJ" kind="presentation" id="xfA-FR-LMN"/>
                                 </connections>
                             </button>
@@ -58,6 +60,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Min Receptbok" id="VCZ-g7-EEj">
                         <barButtonItem key="rightBarButtonItem" title="Logga ut" id="9iw-PG-b89">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="signOutButtonPressed:" destination="BYZ-38-t0r" id="Y1C-1V-Ir0"/>
                             </connections>
@@ -65,6 +68,7 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="createCookBook" destination="wbV-Vz-NU6" id="9PJ-T9-HdZ"/>
                         <outlet property="myCookBookImageView" destination="K7T-f1-l5D" id="UkL-PM-ddV"/>
                         <outlet property="myCookBookNameTV" destination="7M4-bT-bOv" id="GXm-lu-oBj"/>
                     </connections>
@@ -89,9 +93,11 @@
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uOw-ab-eu2">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem title="Lägg till nytt recept" id="zhh-pX-fvI">
                                         <barButtonItem key="leftBarButtonItem" title="Avbryt" id="z5t-FK-SrM">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="cancelButton:" destination="xEq-sn-9Ep" id="PGT-xb-zDQ"/>
                                             </connections>
@@ -188,7 +194,10 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9j3-13-B7X">
                                 <rect key="frame" x="16" y="364" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Logga in"/>
+                                <color key="backgroundColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Logga in">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="loginButton:" destination="SpS-94-bGo" eventType="touchUpInside" id="SQ0-pW-oOG"/>
                                 </connections>
@@ -196,7 +205,10 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ShH-Ak-cSA">
                                 <rect key="frame" x="16" y="402" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Skapa konto"/>
+                                <color key="backgroundColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Skapa konto">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="createAccountButton:" destination="SpS-94-bGo" eventType="touchUpInside" id="J93-FP-m0v"/>
                                 </connections>
@@ -235,7 +247,7 @@
                     <tabBar key="tabBar" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" id="zsk-zW-yFX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.68308540239726023" green="0.54853381849315064" blue="0.4333797089041096" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
@@ -468,6 +480,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CGO-Oi-sFe">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -487,6 +501,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7Eb-MW-DGa">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -562,6 +578,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Index" id="8Yn-fh-TxV">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="jHd-J8-Y0G">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="xEq-sn-9Ep" kind="presentation" id="Yxe-Nj-WlS"/>
                             </connections>

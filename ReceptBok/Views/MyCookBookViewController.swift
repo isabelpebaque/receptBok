@@ -21,12 +21,17 @@ class MyCookBookViewController: UIViewController {
     @IBOutlet weak var myCookBookNameTV: UITextView!
     @IBOutlet weak var myCookBookImageView: UIImageView!
     
-    
+    @IBOutlet weak var createCookBook: UIButton!
     override func viewDidLoad() {
         
         super.viewDidLoad()
         getDataFromFirebase()
         downloadImageFromFirebaseStorage()
+        
+    }
+    
+    @IBAction func createCookBookButtonPressed(_ sender: UIButton) {
+        createCookBook.isHidden = true
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
