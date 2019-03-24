@@ -1,0 +1,6 @@
+framework module Pods_ReceptBok {
+  umbrella header "Pods-ReceptBok-umbrella.h"
+
+  export *
+  module * { export * }
+}
