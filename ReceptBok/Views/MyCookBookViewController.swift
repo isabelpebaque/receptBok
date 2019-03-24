@@ -17,7 +17,8 @@ class MyCookBookViewController: UIViewController {
     let userdef = UserDefaults.standard
     
     // Outlets skapade från storyboard
-    @IBOutlet weak var myCookBookNameLabel: UILabel!
+    
+    @IBOutlet weak var myCookBookNameTV: UITextView!
     @IBOutlet weak var myCookBookImageView: UIImageView!
     
     
@@ -60,7 +61,7 @@ class MyCookBookViewController: UIViewController {
         ref.child("AllCookBooks").child(userID).child("name").observe(.value) { (snapshot) in
             
             if let name = snapshot.value as? String {
-                self.myCookBookNameLabel.text = name
+                self.myCookBookNameTV.text = name
             }
         }
 
