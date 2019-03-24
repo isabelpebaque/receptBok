@@ -27,10 +27,15 @@ class MyCookBookViewController: UIViewController {
         super.viewDidLoad()
         getDataFromFirebase()
         
+        if userdef.bool(forKey: "createdCookBook") {
+            createCookBook.isHidden = true
+        }
+        
     }
     
     @IBAction func createCookBookButtonPressed(_ sender: UIButton) {
         createCookBook.isHidden = true
+        self.userdef.set(true, forKey: "createdCookBook")
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
