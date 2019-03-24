@@ -275,26 +275,27 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="155.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="YXK-9k-Kki">
-                                            <rect key="frame" x="16" y="11" width="148" height="120"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXK-9k-Kki">
+                                            <rect key="frame" x="0.0" y="0.0" width="176" height="155.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="148" id="CWN-jB-Iv8"/>
-                                                <constraint firstAttribute="height" constant="120" id="sb4-4k-9z1"/>
+                                                <constraint firstAttribute="width" constant="176" id="6Pk-vy-PHc"/>
+                                                <constraint firstAttribute="height" constant="155.5" id="qbb-SG-k8a"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annas Bästa Pajer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-cL-A7W">
-                                            <rect key="frame" x="172" y="68" width="182" height="27.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" text="Annas Bästa Pajer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-cL-A7W">
+                                            <rect key="frame" x="184" y="64" width="175" height="28"/>
                                             <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="YXK-9k-Kki" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="top" constant="11" id="1vV-uU-joS"/>
-                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="topMargin" constant="57" id="AFx-UF-lNf"/>
-                                        <constraint firstItem="YXK-9k-Kki" firstAttribute="leading" secondItem="4Xx-wk-RcZ" secondAttribute="leading" constant="16" id="aT6-Is-XZo"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="X2F-cL-A7W" secondAttribute="trailing" constant="5" id="b8R-tq-hqr"/>
-                                        <constraint firstAttribute="bottom" secondItem="YXK-9k-Kki" secondAttribute="bottom" constant="24.5" id="fHD-v5-902"/>
-                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="leading" secondItem="YXK-9k-Kki" secondAttribute="trailing" constant="8" id="nSM-FX-Ps7"/>
+                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="top" constant="64" id="0Aw-5p-cXO"/>
+                                        <constraint firstAttribute="bottom" secondItem="YXK-9k-Kki" secondAttribute="bottom" id="2wR-8l-8f0"/>
+                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="leading" secondItem="YXK-9k-Kki" secondAttribute="trailing" constant="8" id="9yF-Td-F2T"/>
+                                        <constraint firstAttribute="bottom" secondItem="X2F-cL-A7W" secondAttribute="bottom" constant="63.5" id="Sm4-2Y-FKI"/>
+                                        <constraint firstItem="YXK-9k-Kki" firstAttribute="leading" secondItem="4Xx-wk-RcZ" secondAttribute="leading" id="VgM-aF-xWu"/>
+                                        <constraint firstItem="YXK-9k-Kki" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="top" id="cyb-xC-82a"/>
+                                        <constraint firstAttribute="trailing" secondItem="X2F-cL-A7W" secondAttribute="trailing" constant="16" id="rzC-5M-WUi"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -336,7 +337,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fAl-Gq-03C">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fAl-Gq-03C">
                                                 <rect key="frame" x="192" y="92" width="167" height="209"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="209" id="IsA-rM-Pfx"/>
@@ -596,6 +597,6 @@
         <image name="search" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LHQ-QX-7UR"/>
+        <segue reference="uOd-il-lEE"/>
     </inferredMetricsTieBreakers>
 </document>

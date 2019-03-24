@@ -26,7 +26,6 @@ class MyCookBookViewController: UIViewController {
         
         super.viewDidLoad()
         getDataFromFirebase()
-        downloadImageFromFirebaseStorage()
         
     }
     
@@ -71,27 +70,6 @@ class MyCookBookViewController: UIViewController {
         }
 
     }
-    
-    func downloadImageFromFirebaseStorage() {
-        guard let currentUser = Auth.auth().currentUser else { return }
-        let userID = currentUser.uid
-        
-        let storage = Storage.storage()
-        let pathReference = storage.reference(withPath: "cookBookCoverImages/\(userID).png")
-        
-        pathReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
-            if let error = error {
-//                let image = #imageLiteral(resourceName: "Profile Avatar Picture")
-//                self.appDelegate.cookBookImage = image
-                print("hittar ingen bild")
-                print(error.localizedDescription)
-            } else {
-                print("bilden är hittad")
-                self.appDelegate.cookBookImage = UIImage(data: data!)!
-                self.myCookBookImageView.image = self.appDelegate.cookBookImage
-            }
-        }
-        
-    }
+
 
 }

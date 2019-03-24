@@ -128,7 +128,7 @@ class SearchTableViewController: UITableViewController {
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
-            print(self.downloadedImageArray[index!]!)
+           // print(self.downloadedImageArray[index!]!)
             
         }
     }
