@@ -21,6 +21,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     var ingredients : String?
     var instructions : String?
 
+    @IBOutlet weak var secretRecipeSwitch: UISwitch!
     @IBOutlet weak var recipeNameTextView: UITextView!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var instructionsTextView: UITextView!
@@ -101,8 +102,12 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
             "recipeImage":recipeImgpath
         ]
         
-        ref.child("AllCookBooks").child(userId!).child("aCookBookName").childByAutoId().setValue(newPrivateRecipe)
-        ref.child("publicRecipes").childByAutoId().setValue(newPublicRecipe)
+        if secretRecipeSwitch.isOn {
+            ref.child("AllCookBooks").child(userId!).child("aCookBookName").childByAutoId().setValue(newPrivateRecipe)
+        } else {
+            ref.child("publicRecipes").childByAutoId().setValue(newPublicRecipe)
+            ref.child("AllCookBooks").child(userId!).child("aCookBookName").childByAutoId().setValue(newPrivateRecipe)
+        }
         
         dismiss(animated: true, completion: nil)
     }

@@ -167,6 +167,18 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KcN-kn-wOK">
+                                <rect key="frame" x="310" y="75" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.68308540240000004" green="0.54853381850000005" blue="0.43337970889999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Är ditt recept hemligt?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZE-Vp-IGt">
+                                <rect key="frame" x="16" y="80" width="145" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Gl4-er-p1B"/>
@@ -177,6 +189,7 @@
                         <outlet property="instructionsTextView" destination="NYi-ei-8bh" id="4Li-dA-gSN"/>
                         <outlet property="recipeImageView" destination="3us-Md-Fnb" id="snY-02-Vnb"/>
                         <outlet property="recipeNameTextView" destination="6Ww-Jy-iq2" id="Gux-D0-4w1"/>
+                        <outlet property="secretRecipeSwitch" destination="KcN-kn-wOK" id="AKW-a0-h84"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MAR-Id-AxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
