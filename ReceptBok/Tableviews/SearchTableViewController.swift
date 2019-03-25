@@ -13,6 +13,8 @@ import Firebase
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // Array av receipeModel objekt, som vi sparar vår data från firebase i
     var recipesArray = [ReceipeModel]()
+    var recipeSearchArray = [ReceipeModel]()
+    
     // Referenser till Firebase/Firebase Auth
     var ref : DatabaseReference!
     let userId = Auth.auth().currentUser?.uid
@@ -26,6 +28,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         getDataFromFirebase()
+        
     }
     
     override func viewDidLoad() {
@@ -42,7 +45,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             if snapshot.childrenCount > 0 {
                 // Rensar listan så vi inte får dubbla recept i tableviewn
                 self.recipesArray.removeAll()
-                self.downloadedImageArray.removeAll()
+                self.recipeSearchArray.removeAll()
+                //self.downloadedImageArray.removeAll()
                 
                 for recipe in snapshot.children.allObjects as! [DataSnapshot] {
                     // hämtar värden från firebase med nyckelar och sätter dem i variabelns namn
@@ -57,6 +61,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                     
                     //lägger till objectet i array
                     self.recipesArray.append(publicRecipe)
+                    self.recipeSearchArray = self.recipesArray
                 }
                 // Uppdaterar tableview:n med data
                 self.tableView.reloadData()
@@ -73,7 +78,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return recipesArray.count
+        return recipeSearchArray.count
     }
 
     
@@ -83,7 +88,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
         let recipe : ReceipeModel
         
-        recipe = recipesArray[indexPath.row]
+        recipe = recipeSearchArray[indexPath.row]
         
         
         recipeNameForImagePath = recipe.receipeName!
@@ -103,7 +108,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                 self.appDelegate.recipeImage = UIImage(data: data!)!
                 cell.bookCoverImage.image = self.appDelegate.recipeImage
                 
-                self.downloadedImageArray.append(cell.bookCoverImage.image)
+                //self.downloadedImageArray.append(cell.bookCoverImage.image)
                 
             }
         }
@@ -139,6 +144,19 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    // MARK: - Searchfunction
     
-
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            recipeSearchArray = recipesArray;
+            tableView.reloadData()
+            return
+            
+        }
+        recipeSearchArray = recipesArray.filter({ (recipe) -> Bool in
+            return (recipe.receipeName?.lowercased().contains(searchText.lowercased()))!
+        })
+        tableView.reloadData()
+    }
+    
 }
