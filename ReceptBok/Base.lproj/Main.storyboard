@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myCookBook" translatesAutoresizingMaskIntoConstraints="NO" id="K7T-f1-l5D">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myCookBook" translatesAutoresizingMaskIntoConstraints="NO" id="K7T-f1-l5D">
                                 <rect key="frame" x="16" y="89" width="343" height="453"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -42,11 +42,11 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="testtext" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M4-bT-bOv">
-                                <rect key="frame" x="73" y="196" width="231" height="128"/>
+                                <rect key="frame" x="35" y="196" width="304" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="27"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -276,7 +276,7 @@
             </objects>
             <point key="canvasLocation" x="-1991" y="-195"/>
         </scene>
-        <!--Hitta Receptböcker-->
+        <!--Hitta Recept-->
         <scene sceneID="GHT-uU-Ig4">
             <objects>
                 <tableViewController id="nb4-Cj-TxL" customClass="SearchTableViewController" customModule="ReceptBok" customModuleProvider="target" sceneMemberID="viewController">
@@ -284,33 +284,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="pRC-Os-o1A">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="nb4-Cj-TxL" id="oLD-1E-MN4"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="156" id="pjt-n8-WIl" customClass="BookTableViewCell" customModule="ReceptBok" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="156"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="99" id="pjt-n8-WIl" customClass="BookTableViewCell" customModule="ReceptBok" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pjt-n8-WIl" id="4Xx-wk-RcZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="155.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="98.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXK-9k-Kki">
-                                            <rect key="frame" x="0.0" y="0.0" width="176" height="155.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="133" height="99"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="176" id="6Pk-vy-PHc"/>
-                                                <constraint firstAttribute="height" constant="155.5" id="qbb-SG-k8a"/>
+                                                <constraint firstAttribute="height" constant="99" id="hiE-z2-RoE"/>
+                                                <constraint firstAttribute="width" constant="133" id="nkY-sq-gOe"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" text="Annas Bästa Pajer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-cL-A7W">
-                                            <rect key="frame" x="184" y="64" width="175" height="28"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" text="Annas Bästa Pajer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-cL-A7W">
+                                            <rect key="frame" x="149" y="35" width="210" height="28"/>
                                             <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="top" constant="64" id="0Aw-5p-cXO"/>
+                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="top" constant="35" id="0Aw-5p-cXO"/>
                                         <constraint firstAttribute="bottom" secondItem="YXK-9k-Kki" secondAttribute="bottom" id="2wR-8l-8f0"/>
-                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="leading" secondItem="YXK-9k-Kki" secondAttribute="trailing" constant="8" id="9yF-Td-F2T"/>
-                                        <constraint firstAttribute="bottom" secondItem="X2F-cL-A7W" secondAttribute="bottom" constant="63.5" id="Sm4-2Y-FKI"/>
+                                        <constraint firstAttribute="bottom" secondItem="X2F-cL-A7W" secondAttribute="bottom" constant="35.5" id="Sm4-2Y-FKI"/>
                                         <constraint firstItem="YXK-9k-Kki" firstAttribute="leading" secondItem="4Xx-wk-RcZ" secondAttribute="leading" id="VgM-aF-xWu"/>
+                                        <constraint firstItem="X2F-cL-A7W" firstAttribute="leading" secondItem="YXK-9k-Kki" secondAttribute="trailing" constant="16" id="ZCf-xJ-dSh"/>
                                         <constraint firstItem="YXK-9k-Kki" firstAttribute="top" secondItem="4Xx-wk-RcZ" secondAttribute="top" id="cyb-xC-82a"/>
                                         <constraint firstAttribute="trailing" secondItem="X2F-cL-A7W" secondAttribute="trailing" constant="16" id="rzC-5M-WUi"/>
                                     </constraints>
@@ -327,8 +335,11 @@
                             <outlet property="delegate" destination="nb4-Cj-TxL" id="0mf-Fb-rZM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Hitta Receptböcker" id="HwN-KB-Q3I"/>
+                    <navigationItem key="navigationItem" title="Hitta Recept" id="HwN-KB-Q3I"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="findRecipesSearchBar" destination="pRC-Os-o1A" id="6FX-M4-WUl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zr-dv-Lfn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

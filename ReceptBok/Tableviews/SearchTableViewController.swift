@@ -10,7 +10,7 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
-class SearchTableViewController: UITableViewController {
+class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // Array av receipeModel objekt, som vi sparar vår data från firebase i
     var recipesArray = [ReceipeModel]()
     // Referenser till Firebase/Firebase Auth
@@ -21,6 +21,8 @@ class SearchTableViewController: UITableViewController {
     var recipeNameForImagePath = ""
     
     var downloadedImageArray = [UIImage?]()
+    
+    @IBOutlet weak var findRecipesSearchBar: UISearchBar!
     
     override func viewWillAppear(_ animated: Bool) {
         getDataFromFirebase()
@@ -80,9 +82,11 @@ class SearchTableViewController: UITableViewController {
         
 
         let recipe : ReceipeModel
-        recipe = recipesArray[indexPath.row]
-        recipeNameForImagePath = recipe.receipeName!
         
+        recipe = recipesArray[indexPath.row]
+        
+        
+        recipeNameForImagePath = recipe.receipeName!
         
         cell.recipeNameLabel.text = recipe.receipeName
         
@@ -107,6 +111,8 @@ class SearchTableViewController: UITableViewController {
         
         return cell
     }
+    
+    
     
     // MARK: - Navigation
 
