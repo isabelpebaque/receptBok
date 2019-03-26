@@ -38,13 +38,14 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     fileprivate func getDataFromFirebase() {
         ref = Database.database().reference().child("publicRecipes")
+        var downloadedImage = UIImage()
+        
         
         ref.observe(.value) { (snapshot) in
             if snapshot.childrenCount > 0 {
                 // Rensar listan så vi inte får dubbla recept i tableviewn
                 self.recipesArray.removeAll()
                 self.recipeSearchArray.removeAll()
-                //self.downloadedImageArray.removeAll()
                 
                 for recipe in snapshot.children.allObjects as! [DataSnapshot] {
                     // hämtar värden från firebase med nyckelar och sätter dem i variabelns namn
@@ -54,29 +55,39 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                     let howTo = recipeObject?["instructions"]
                     let imagePathURL = recipeObject?["recipeImage"]
                     
-                    // skapar ett objekt med konstruktor från ReceipeModel
-                    let publicRecipe = ReceipeModel(receipeName: (recipeName as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), image: (imagePathURL as! String))
+                    let pathReference = self.storage.reference(forURL: image as! String)
                     
-                    //lägger till objectet i array
-                    self.recipesArray.append(publicRecipe)
-                    self.recipeSearchArray = self.recipesArray
+                    pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                        if let error = error {
+                            print("hittar ingen bild")
+                            print(error.localizedDescription)
+                        } else {
+                            downloadedImage = UIImage(data: data!)!
+                            print("bilden är hittad")
+                            
+                            // skapar ett objekt med konstruktor från ReceipeModel
+                            let publicRecipe = ReceipeModel(receipeName: (recipeName as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), image: downloadedImage)
+                            
+                            //lägger till objectet i array
+                            self.recipesArray.append(publicRecipe)
+                            self.recipeSearchArray = self.recipesArray
+                            
+                            // Uppdaterar tableview:n med data
+                            self.tableView.reloadData()
+                        }
+                    }
                 }
-                // Uppdaterar tableview:n med data
-                self.tableView.reloadData()
             }
         }
     }
 
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return recipeSearchArray.count
     }
 
@@ -87,27 +98,12 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
         let recipe : ReceipeModel
         recipe = recipeSearchArray[indexPath.row]
-        recipeNameForImagePath = recipe.image!
         
         cell.recipeNameLabel.text = recipe.receipeName
-        
-        let pathReference = storage.reference(forURL: (recipeNameForImagePath))
-        
-        pathReference.downloadURL { (url, error) in
-            if let error = error {
-                print("hittar ingen bild")
-                print(error.localizedDescription)
-            } else {
-                let data = NSData(contentsOf: url!)
-                cell.bookCoverImage.image = UIImage(data: data! as Data)!
-                print("Bild hittad!")
-            }
-        }
+        cell.bookCoverImage.image = recipe.image
         
         return cell
     }
-    
-    
     
     // MARK: - Navigation
 
@@ -128,7 +124,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
-            print(self.recipesArray[index!].receipeName as Any)
+            print(self.recipesArray[index!].receipeName ?? "ingen information att hämta")
             
         }
     }

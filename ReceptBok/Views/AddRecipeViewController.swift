@@ -137,9 +137,9 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         
         let storage = self.storage.reference()
         
-        let storageRef = storage.child("recipesImages/\(userId!)/\(recipeNameTextView.text!).jpg")
+        let storageRef = storage.child("recipesImages/\(userId!)/\(recipeNameTextView.text!).png")
         
-        let resizedImage = resizeImage(image: recipeImageView.image!, targetSize: CGSize.init(width: 550, height: 550))
+        let resizedImage = resizeImage(image: recipeImageView.image!, targetSize: CGSize.init(width: 500, height: 500))
         
         let uploadData = resizedImage
         if let imageData = uploadData.pngData() {
