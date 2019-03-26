@@ -22,8 +22,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var recipeNameForImagePath = ""
     
-    var downloadedImageArray = [UIImage?]()
-    
     @IBOutlet weak var findRecipesSearchBar: UISearchBar!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,10 +52,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                     let recipeName = recipeObject?["name"]
                     let ingredient = recipeObject?["ingredients"]
                     let howTo = recipeObject?["instructions"]
-                    let image = recipeObject?["recipeImage"]
+                    let imagePathURL = recipeObject?["recipeImage"]
                     
                     // skapar ett objekt med konstruktor från ReceipeModel
-                    let publicRecipe = ReceipeModel(receipeName: (recipeName as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), image: (image as! String))
+                    let publicRecipe = ReceipeModel(receipeName: (recipeName as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), image: (imagePathURL as! String))
                     
                     //lägger till objectet i array
                     self.recipesArray.append(publicRecipe)
@@ -68,6 +66,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             }
         }
     }
+
 
     // MARK: - Table view data source
 
@@ -87,32 +86,24 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
 
         let recipe : ReceipeModel
-        
         recipe = recipeSearchArray[indexPath.row]
-        
-        
-        recipeNameForImagePath = recipe.receipeName!
+        recipeNameForImagePath = recipe.image!
         
         cell.recipeNameLabel.text = recipe.receipeName
         
-        let pathReference = storage.reference(withPath: "recipesImages/\(userId!)/\(self.recipeNameForImagePath).png")
+        let pathReference = storage.reference(forURL: (recipeNameForImagePath))
         
-        pathReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
+        pathReference.downloadURL { (url, error) in
             if let error = error {
-                //                let image = #imageLiteral(resourceName: "Profile Avatar Picture")
-                //                self.appDelegate.cookBookImage = image
                 print("hittar ingen bild")
                 print(error.localizedDescription)
             } else {
-                print("bilden är hittad")
-                self.appDelegate.recipeImage = UIImage(data: data!)!
-                cell.bookCoverImage.image = self.appDelegate.recipeImage
-                
-                //self.downloadedImageArray.append(cell.bookCoverImage.image)
+                let data = NSData(contentsOf: url!)
+                cell.bookCoverImage.image = UIImage(data: data! as Data)!
+                print("Bild hittad!")
                 
             }
         }
-        
         
         return cell
     }
@@ -122,7 +113,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print(self.downloadedImageArray.count)
         
         // Kollar så vi har rätt segueway
         if  segue.identifier == "searchSegueToFullRecipe" {
@@ -139,7 +129,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
-           // print(self.downloadedImageArray[index!]!)
+            print(self.recipesArray[index!].receipeName as Any)
             
         }
     }

@@ -56,18 +56,15 @@ class CookBookPageViewController: UIViewController {
     
     func downloadImageFromFirebaseStorage() {
         
-        let pathReference = storage.reference(withPath: "recipesImages/\(userId!)/\(namePassedOver!).png")
+        let pathReference = storage.reference(withPath: "recipesImages/\(userId!)/\(namePassedOver!).jpg")
         
-        pathReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
             if let error = error {
-                //                let image = #imageLiteral(resourceName: "Profile Avatar Picture")
-                //                self.appDelegate.cookBookImage = image
                 print("hittar ingen bild")
                 print(error.localizedDescription)
             } else {
                 print("bilden är hittad")
-                self.appDelegate.recipeImage = UIImage(data: data!)!
-                self.photoImageView.image = self.appDelegate.recipeImage
+                self.photoImageView.image = UIImage(data: data!)!
             }
         }
         
