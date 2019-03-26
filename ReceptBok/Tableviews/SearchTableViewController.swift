@@ -19,7 +19,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     var ref : DatabaseReference!
     let userId = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
-    var recipeNameForImagePath = ""
     
     @IBOutlet weak var findRecipesSearchBar: UISearchBar!
     
@@ -36,48 +35,43 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // Mark: - Get data from Firebase
     
     fileprivate func getDataFromFirebase() {
-        ref = Database.database().reference().child("publicRecipes")
+        ref = Database.database().reference().child("publicRecipes").child("recipesByUsers")
         var downloadedImage = UIImage()
+        self.recipeSearchArray.removeAll()
+        self.recipesArray.removeAll()
         
-        
-        ref.observe(.value) { (snapshot) in
-            if snapshot.childrenCount > 0 {
-                // Rensar listan så vi inte får dubbla recept i tableviewn
-                self.recipesArray.removeAll()
-                self.recipeSearchArray.removeAll()
-                
-                for recipe in snapshot.children.allObjects as! [DataSnapshot] {
-                    // hämtar värden från firebase med nyckelar och sätter dem i variabelns namn
-                    let recipeObject = recipe.value as? [String: AnyObject]
-                    let recipeName = recipeObject?["name"]
-                    let ingredient = recipeObject?["ingredients"]
-                    let howTo = recipeObject?["instructions"]
-                    let image = recipeObject?["recipeImage"]
+        ref.observe(.childAdded) { (snapshot) in
+            
+            let snapshotValue = snapshot.value as! Dictionary<String, String>
+            
+            let recipeName = snapshotValue["name"]!
+            let ingredient = snapshotValue["ingredients"]!
+            let howTo = snapshotValue["instructions"]!
+            let image = snapshotValue["recipeImage"]!
+            
+            let pathReference = self.storage.reference(forURL: image)
+            
+            pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print("hittar ingen bild")
+                    print(error.localizedDescription)
+                } else {
+                    downloadedImage = UIImage(data: data!)!
+                    print("bilden är hittad")
                     
-                    let pathReference = self.storage.reference(forURL: image as! String)
+                    // skapar ett objekt med konstruktor från ReceipeModel
+                    let publicRecipe = ReceipeModel(receipeName: recipeName, ingredients: ingredient, howTo: howTo, image: downloadedImage)
                     
-                    pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                        if let error = error {
-                            print("hittar ingen bild")
-                            print(error.localizedDescription)
-                        } else {
-                            downloadedImage = UIImage(data: data!)!
-                            print("bilden är hittad")
-                            
-                            // skapar ett objekt med konstruktor från ReceipeModel
-                            let publicRecipe = ReceipeModel(receipeName: (recipeName as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), image: downloadedImage)
-                            
-                            //lägger till objectet i array
-                            self.recipesArray.append(publicRecipe)
-                            self.recipeSearchArray = self.recipesArray
-                            
-                            // Uppdaterar tableview:n med data
-                            self.tableView.reloadData()
-                        }
-                    }
+                    //lägger till objectet i array
+                    self.recipesArray.append(publicRecipe)
+                    self.recipeSearchArray = self.recipesArray
+                    
+                    // Uppdaterar tableview:n med data
+                    self.tableView.reloadData()
                 }
             }
         }
+       // ref.removeObserver(withHandle: refHandle)
     }
 
     // MARK: - Table view data source
@@ -140,7 +134,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             recipeSearchArray = recipesArray;
             tableView.reloadData()
             return
-            
+
         }
         recipeSearchArray = recipesArray.filter({ (recipe) -> Bool in
             return (recipe.receipeName?.lowercased().contains(searchText.lowercased()))!

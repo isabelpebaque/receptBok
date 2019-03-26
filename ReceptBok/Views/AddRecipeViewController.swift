@@ -105,7 +105,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         if secretRecipeSwitch.isOn {
             ref.child("AllCookBooks").child(userId!).child("aCookBookName").childByAutoId().setValue(newPrivateRecipe)
         } else {
-            ref.child("publicRecipes").childByAutoId().setValue(newPublicRecipe)
+            ref.child("publicRecipes").child("recipesByUsers").childByAutoId().setValue(newPublicRecipe)
             ref.child("AllCookBooks").child(userId!).child("aCookBookName").childByAutoId().setValue(newPrivateRecipe)
         }
         

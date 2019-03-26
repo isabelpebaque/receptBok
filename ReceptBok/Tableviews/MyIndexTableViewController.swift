@@ -15,6 +15,7 @@ class MyIndexTableViewController: UITableViewController {
     var amountOfRecipesArray = [ReceipeModel]()
     // Referenser till Firebase/Firebase Auth
     var ref : DatabaseReference!
+    var refHandle : DatabaseHandle!
     var userId = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
     
@@ -33,47 +34,46 @@ class MyIndexTableViewController: UITableViewController {
     // Mark: - Get data from Firebase
     
     fileprivate func getDataFromFirebase() {
-        ref = Database.database().reference().child("AllCookBooks").child(userId!).child("aCookBookName");
+        ref = Database.database().reference().child("AllCookBooks").child(userId!).child("aCookBookName")
         var downloadedImage = UIImage()
+        // Variabel som håller koll hur många recept som hämtas från firebase som vi sedan använder som sidonummer
+        var amountOfPages = 0
         
-        ref.observe(.value) { (snapshot) in
-            if snapshot.childrenCount > 0 {
-                // Rensar listan så vi inte får dubbla recept i tableviewn
-                self.amountOfRecipesArray.removeAll()
-                // Variabel som håller koll hur många recept som hämtas från firebase som vi sedan använder som sidonummer
-                var amountOfPages = 0
-                // hämtar värden från firebase med nyckelar och sätter dem i variabelnamn
-                for recipe in snapshot.children.allObjects as! [DataSnapshot] {
+        // Rensar listan så vi inte får dubbla recept i tableviewn
+        self.amountOfRecipesArray.removeAll()
+        
+        refHandle = ref.observe(.childAdded) { (snapshot) in
+            
+            let snapshotValue = snapshot.value as! [String : AnyObject]
+            
+            let name = snapshotValue["recipeName"]!
+            let ingredient = snapshotValue["ingredients"]!
+            let howTo = snapshotValue["instructions"]!
+            let image = snapshotValue["recipeImage"]!
+            
+            let pathReference = self.storage.reference(forURL: image as! String)
+            
+            pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print("hittar ingen bild")
+                    print(error.localizedDescription)
+                } else {
+                    downloadedImage = UIImage(data: data!)!
+                    print("bilden är hittad")
+                    amountOfPages += 1
+                    // skapar ett objekt med konstruktor från ReceipeModel
+                    let recipePage = ReceipeModel(receipeName: name as? String, ingredients: ingredient as? String, howTo: howTo as? String, pageNr: amountOfPages, image: downloadedImage )
                     
-                    let recipeObjects = recipe.value as? [String: AnyObject]
-                    let name  = recipeObjects?["recipeName"]
-                    let ingredient = recipeObjects?["ingredients"]
-                    let howTo = recipeObjects?["instructions"]
-                    let image = recipeObjects?["recipeImage"]
+                    //lägger till objektet i array
+                    self.amountOfRecipesArray.append(recipePage)
                     
-                    
-                    let pathReference = self.storage.reference(forURL: image as! String)
-                    pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                        if let error = error {
-                            print("hittar ingen bild")
-                            print(error.localizedDescription)
-                        } else {
-                            downloadedImage = UIImage(data: data!)!
-                            print("bilden är hittad")
-                            amountOfPages += 1
-                            // skapar ett objekt med konstruktor från ReceipeModel
-                            let recipePage = ReceipeModel(receipeName: (name as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), pageNr: amountOfPages, image: downloadedImage )
-                            
-                            //lägger till objektet i array
-                            self.amountOfRecipesArray.append(recipePage)
-                            
-                            // Uppdaterar tableview:n med data
-                            self.tableView.reloadData()
-                        }
-                    }
+                    // Uppdaterar tableview:n med data
+                    self.tableView.reloadData()
+
                 }
             }
         }
+        //ref.removeObserver(withHandle: refHandle)
     }
 
     // MARK: - Table view data source
