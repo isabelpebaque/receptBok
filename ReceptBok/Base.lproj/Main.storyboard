@@ -41,7 +41,7 @@
                                     <segue destination="Tjw-X8-rpJ" kind="presentation" id="xfA-FR-LMN"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="testtext" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M4-bT-bOv">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M4-bT-bOv">
                                 <rect key="frame" x="35" y="196" width="304" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -16,12 +16,17 @@ class MyIndexTableViewController: UITableViewController {
     // Referenser till Firebase/Firebase Auth
     var ref : DatabaseReference!
     var userId = Auth.auth().currentUser?.uid
+    let storage = Storage.storage()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getDataFromFirebase()
+    }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getDataFromFirebase()
+        
     }
     
     
@@ -29,6 +34,7 @@ class MyIndexTableViewController: UITableViewController {
     
     fileprivate func getDataFromFirebase() {
         ref = Database.database().reference().child("AllCookBooks").child(userId!).child("aCookBookName");
+        var downloadedImage = UIImage()
         
         ref.observe(.value) { (snapshot) in
             if snapshot.childrenCount > 0 {
@@ -45,17 +51,27 @@ class MyIndexTableViewController: UITableViewController {
                     let howTo = recipeObjects?["instructions"]
                     let image = recipeObjects?["recipeImage"]
                     
-                    amountOfPages += 1
                     
-                    // skapar ett objekt med konstruktor från ReceipeModel
-                    let recipePage = ReceipeModel(receipeName: (name as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), pageNr: amountOfPages, image: (image as! String) )
-                    
-                    
-                    //lägger till objektet i array
-                    self.amountOfRecipesArray.append(recipePage)
+                    let pathReference = self.storage.reference(forURL: image as! String)
+                    pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                        if let error = error {
+                            print("hittar ingen bild")
+                            print(error.localizedDescription)
+                        } else {
+                            downloadedImage = UIImage(data: data!)!
+                            print("bilden är hittad")
+                            amountOfPages += 1
+                            // skapar ett objekt med konstruktor från ReceipeModel
+                            let recipePage = ReceipeModel(receipeName: (name as! String), ingredients: (ingredient as! String), howTo: (howTo as! String), pageNr: amountOfPages, image: downloadedImage )
+                            
+                            //lägger till objektet i array
+                            self.amountOfRecipesArray.append(recipePage)
+                            
+                            // Uppdaterar tableview:n med data
+                            self.tableView.reloadData()
+                        }
+                    }
                 }
-                // Uppdaterar tableview:n med data
-                self.tableView.reloadData()
             }
         }
     }
@@ -75,8 +91,6 @@ class MyIndexTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "indexCell", for: indexPath) as! IndexTableViewCell
         
-       
-
         var recipe : ReceipeModel
         
         recipe = amountOfRecipesArray[indexPath.row]
@@ -101,7 +115,7 @@ class MyIndexTableViewController: UITableViewController {
             destination.ingredientPassedOver = self.amountOfRecipesArray[index!].ingredients
             destination.instructionPassedOver = self.amountOfRecipesArray[index!].howTo
             destination.pageNrPassedOver = self.amountOfRecipesArray[index!].pageNr
-            //destination.imagePassedOver = self.amountOfRecipesArray[index!].image
+            destination.imagePassedOver = self.amountOfRecipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("myIndexTableViewController will pass over: ")

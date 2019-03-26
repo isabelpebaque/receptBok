@@ -15,7 +15,6 @@
 		745014EC223A7BCA00E97D8B /* IndexTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745014EB223A7BCA00E97D8B /* IndexTableViewCell.swift */; };
 		746076A2223900A600D81AEB /* ReceipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746076A1223900A600D81AEB /* ReceipeModel.swift */; };
 		749C5F162231B3B300009B53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C5F152231B3B300009B53 /* AppDelegate.swift */; };
-		749C5F182231B3B300009B53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C5F172231B3B300009B53 /* ViewController.swift */; };
 		749C5F1B2231B3B300009B53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 749C5F192231B3B300009B53 /* Main.storyboard */; };
 		749C5F1D2231B3B500009B53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 749C5F1C2231B3B500009B53 /* Assets.xcassets */; };
 		749C5F202231B3B500009B53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 749C5F1E2231B3B500009B53 /* LaunchScreen.storyboard */; };
@@ -36,7 +35,6 @@
 		746076A1223900A600D81AEB /* ReceipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceipeModel.swift; sourceTree = "<group>"; };
 		749C5F122231B3B300009B53 /* ReceptBok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceptBok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		749C5F152231B3B300009B53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		749C5F172231B3B300009B53 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		749C5F1A2231B3B300009B53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		749C5F1C2231B3B500009B53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		749C5F1F2231B3B500009B53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 		745014ED223AC6C800E97D8B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				749C5F172231B3B300009B53 /* ViewController.swift */,
 				749C5F3722326F4800009B53 /* ModalViewController.swift */,
 				74382E272236DEDA0049BB93 /* MyCookBookViewController.swift */,
 				744881B02239315500B15318 /* FirstScreenViewController.swift */,
@@ -280,7 +277,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				749C5F182231B3B300009B53 /* ViewController.swift in Sources */,
 				745014EC223A7BCA00E97D8B /* IndexTableViewCell.swift in Sources */,
 				749C5F3622326EFB00009B53 /* AddRecipeViewController.swift in Sources */,
 				745014EA223A410500E97D8B /* MyIndexTableViewController.swift in Sources */,

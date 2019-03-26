@@ -14,23 +14,18 @@ class CookBookPageViewController: UIViewController {
     var ref : DatabaseReference!
     var userId = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var namePassedOver : String?
     var ingredientPassedOver : String?
     var instructionPassedOver : String?
     var pageNrPassedOver : Int?
-    //var imagePassedOver : UIImage?
+    var imagePassedOver : UIImage?
     
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var instructionsTextView: UITextView!
-    
-    override func viewWillAppear(_ animated: Bool) {
-       
-        downloadImageFromFirebaseStorage()
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +34,7 @@ class CookBookPageViewController: UIViewController {
         recipeNameLabel.text = namePassedOver
         ingredientsTextView.text = ingredientPassedOver
         instructionsTextView.text = instructionPassedOver
-       // photoImageView.image = imagePassedOver
+        photoImageView.image = imagePassedOver
         
         
         // Data skickat från sök tableView skal ha titel 'delade recept', data skickat från myIndex tableView skal sidanummer stå
@@ -51,27 +46,7 @@ class CookBookPageViewController: UIViewController {
         
         // Kollar så vi har data från segue
         print("CookBookPageViewController got this from papssedover data: ")
-       // print(imagePassedOver!)
+        print(namePassedOver!)
     }
-    
-    func downloadImageFromFirebaseStorage() {
-        
-        let pathReference = storage.reference(withPath: "recipesImages/\(userId!)/\(namePassedOver!).png")
-        
-        pathReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
-            if let error = error {
-                //                let image = #imageLiteral(resourceName: "Profile Avatar Picture")
-                //                self.appDelegate.cookBookImage = image
-                print("hittar ingen bild")
-                print(error.localizedDescription)
-            } else {
-                print("bilden är hittad")
-                self.appDelegate.recipeImage = UIImage(data: data!)!
-                self.photoImageView.image = self.appDelegate.recipeImage
-            }
-        }
-        
-    }
-   
 
 }

@@ -13,7 +13,6 @@ import Firebase
 class MyCookBookViewController: UIViewController {
     //Kopplingar till Firebase/Firebase Auth
     let ref = Database.database().reference()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let userdef = UserDefaults.standard
     
     // Outlets skapade från storyboard
@@ -55,9 +54,9 @@ class MyCookBookViewController: UIViewController {
     // Metod som öppnar första inloggningsfönstret
     func openSignInView(){
         
-        if let signInView = (self.storyboard!.instantiateViewController(withIdentifier: "firstViewController") as? UIViewController) {
-            self.present(signInView, animated: true, completion: nil)
-        }
+        let signInView = self.storyboard!.instantiateViewController(withIdentifier: "firstViewController")
+        self.present(signInView, animated: true, completion: nil)
+        
     }
     
     // Mark: - Get data from Firebase
