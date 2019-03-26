@@ -101,7 +101,7 @@ class MyIndexTableViewController: UITableViewController {
             destination.ingredientPassedOver = self.amountOfRecipesArray[index!].ingredients
             destination.instructionPassedOver = self.amountOfRecipesArray[index!].howTo
             destination.pageNrPassedOver = self.amountOfRecipesArray[index!].pageNr
-            //destination.imagePassedOver = self.amountOfRecipesArray[index!].image
+            destination.imagePassedOver = self.amountOfRecipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("myIndexTableViewController will pass over: ")

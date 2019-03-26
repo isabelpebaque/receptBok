@@ -20,7 +20,7 @@ class CookBookPageViewController: UIViewController {
     var ingredientPassedOver : String?
     var instructionPassedOver : String?
     var pageNrPassedOver : Int?
-    //var imagePassedOver : UIImage?
+    var imagePassedOver : String?
     
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var recipeNameLabel: UILabel!
@@ -50,21 +50,22 @@ class CookBookPageViewController: UIViewController {
         }
         
         // Kollar så vi har data från segue
-        print("CookBookPageViewController got this from papssedover data: ")
-       // print(imagePassedOver!)
+        print("CookBookPageViewController got this from passed over data: ")
+        print(namePassedOver!)
     }
     
     func downloadImageFromFirebaseStorage() {
         
-        let pathReference = storage.reference(withPath: "recipesImages/\(userId!)/\(namePassedOver!).jpg")
+        let pathReference = storage.reference(forURL: (imagePassedOver!))
         
-        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        pathReference.downloadURL { (url, error) in
             if let error = error {
                 print("hittar ingen bild")
                 print(error.localizedDescription)
             } else {
-                print("bilden är hittad")
-                self.photoImageView.image = UIImage(data: data!)!
+                let data = NSData(contentsOf: url!)
+                self.photoImageView.image = UIImage(data: data! as Data)!
+                print("Bild hittad!")
             }
         }
         

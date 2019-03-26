@@ -101,7 +101,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                 let data = NSData(contentsOf: url!)
                 cell.bookCoverImage.image = UIImage(data: data! as Data)!
                 print("Bild hittad!")
-                
             }
         }
         
@@ -125,7 +124,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             destination.namePassedOver = self.recipesArray[index!].receipeName
             destination.ingredientPassedOver = self.recipesArray[index!].ingredients
             destination.instructionPassedOver = self.recipesArray[index!].howTo
-          //  destination.imagePassedOver = self.downloadedImageArray[index!]
+            destination.imagePassedOver = self.recipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
