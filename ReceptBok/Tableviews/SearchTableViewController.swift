@@ -19,7 +19,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     var ref : DatabaseReference!
     let userId = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var recipeNameForImagePath = ""
     
     @IBOutlet weak var findRecipesSearchBar: UISearchBar!
@@ -53,7 +52,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                     let recipeName = recipeObject?["name"]
                     let ingredient = recipeObject?["ingredients"]
                     let howTo = recipeObject?["instructions"]
-                    let imagePathURL = recipeObject?["recipeImage"]
+                    let image = recipeObject?["recipeImage"]
                     
                     let pathReference = self.storage.reference(forURL: image as! String)
                     
@@ -113,18 +112,23 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         if  segue.identifier == "searchSegueToFullRecipe" {
             // Sätter CookBookPageViewController som vår destination
             let destination = segue.destination as! CookBookPageViewController
+            
             // Sparar vilken plats i arrayen vi skal hämta data
             let index = tableView.indexPathForSelectedRow?.row
-
+            
+            // Tar bort keyboard från vyn och tömmer searchbaren från bokstäver
+            findRecipesSearchBar.endEditing(true)
+            findRecipesSearchBar.text = ""
+            
             // Tar ut namn, ingredienser, instruktioner och sidonummer från objektet och för över det till destinations ViewController
-            destination.namePassedOver = self.recipesArray[index!].receipeName
-            destination.ingredientPassedOver = self.recipesArray[index!].ingredients
-            destination.instructionPassedOver = self.recipesArray[index!].howTo
-            destination.imagePassedOver = self.recipesArray[index!].image
+            destination.namePassedOver = self.recipeSearchArray[index!].receipeName
+            destination.ingredientPassedOver = self.recipeSearchArray[index!].ingredients
+            destination.instructionPassedOver = self.recipeSearchArray[index!].howTo
+            destination.imagePassedOver = self.recipeSearchArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
-            print(self.recipesArray[index!].receipeName ?? "ingen information att hämta")
+            print(self.recipeSearchArray[index!].receipeName ?? "ingen information att hämta")
             
         }
     }
