@@ -11,17 +11,10 @@ import FirebaseDatabase
 import Firebase
 
 class MyIndexTableViewController: UITableViewController {
-    // Array av receipeModel objekt, som vi sparar vår data från firebase i
-    var amountOfRecipesArray = [ReceipeModel]()
-    // Referenser till Firebase/Firebase Auth
-    var ref : DatabaseReference!
-    var refHandle : DatabaseHandle!
-    var userId = Auth.auth().currentUser?.uid
-    let storage = Storage.storage()
     
     override func viewWillAppear(_ animated: Bool) {
         
-        DataManager.shared.getDataFromFirebaseFirstTime()
+        DataManager.shared.getDataFromFirebasePrivateRecipes()
         
         if tableView.indexPathForSelectedRow != nil {
             tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
@@ -38,11 +31,6 @@ class MyIndexTableViewController: UITableViewController {
     @objc func updateViewOnNotification() {
         self.tableView.reloadData()
     }
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-    }
-    
 
     // MARK: - Table view data source
 

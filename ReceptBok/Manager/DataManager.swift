@@ -43,10 +43,8 @@ class DataManager: NSObject {
     
     // Mark: - Get data from Firebase
     
-    func getDataFromFirebaseFirstTime() {
+    func getDataFromFirebasePrivateRecipes() {
         self.ref = Database.database().reference().child("AllCookBooks").child(self.userId!).child("aCookBookName")
-        
-        
         
         if self.recipesArray.count == 0 {
             
@@ -76,9 +74,6 @@ class DataManager: NSObject {
                 NotificationCenter.default.post(name: Notification.Name("dataFetched"), object: nil)
                 
             }
-       
-            
- 
         } else {
             
             self.ref.observe(.childAdded) { (snapshot) in
@@ -109,10 +104,64 @@ class DataManager: NSObject {
             }
             ref.removeAllObservers()
         }
-       
-        
-        
     }
+    
+    func getDataFromFirebasePublicRecipes() {
+        self.ref = Database.database().reference().child("AllCookBooks").child("publicRecipes").child("recipesByUsers")
+        
+        if self.recipesArray.count == 0 {
+            
+            self.ref.observeSingleEvent(of: .value) { (snapshot) in
+                
+                guard let snapshotValue = snapshot.value as? [String : Any] else {return}
+                
+                for case let recipe as [String:String] in snapshotValue.values{
+                    let name = recipe["name"]!
+                    let ingredient = recipe["ingredients"]!
+                    let howTo = recipe["instructions"]!
+                    let image = recipe["recipeImage"]! // URL
+                    
+                    // KOMMENTAR FRÅN HANDLEDARE - Du bör hämta bilder endast när de skall visas
+                    
+                    let recipePage = ReceipeModel(receipeName: name, ingredients: ingredient, howTo: howTo, imageUrlPath: image)
+                    
+                    
+                    self.recipesArray.append(recipePage)
+                    self.getImageForRecipe(recipeImage: image, recipe: recipePage)
+                    
+                }
+                
+                NotificationCenter.default.post(name: Notification.Name("dataFetched"), object: nil)
+                
+            }
+        } else {
+            
+            self.ref.observe(.childAdded) { (snapshot) in
+                
+                let snapshotValue = snapshot.value as! [String : AnyObject]
+                
+                let name = snapshotValue["recipeName"]! as? String
+                let ingredient = snapshotValue["ingredients"]! as? String
+                let howTo = snapshotValue["instructions"]! as? String
+                let image = snapshotValue["recipeImage"]! as? String
+                
+                
+                let recipePage = ReceipeModel(receipeName: name, ingredients: ingredient, howTo: howTo, imageUrlPath: image)
+                
+                
+                //lägger till objektet i array
+                self.recipesArray.append(recipePage)
+                self.getImageForRecipe(recipeImage: image ?? "", recipe: recipePage)
+                print("ChildAdded observern har lagt till receptet")
+                
+                
+                NotificationCenter.default.post(name: Notification.Name("dataFetched"), object: nil)
+                
+            }
+            ref.removeAllObservers()
+        }
+    }
+
 
     
 }

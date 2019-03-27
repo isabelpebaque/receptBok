@@ -11,20 +11,12 @@ import FirebaseDatabase
 import Firebase
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
-    // Array av receipeModel objekt, som vi sparar vår data från firebase i
-    var recipesArray = [ReceipeModel]()
-    var recipeSearchArray = [ReceipeModel]()
-    
-    // Referenser till Firebase/Firebase Auth
-    var ref : DatabaseReference!
-    let userId = Auth.auth().currentUser?.uid
-    let storage = Storage.storage()
     
     @IBOutlet weak var findRecipesSearchBar: UISearchBar!
     
     override func viewWillAppear(_ animated: Bool) {
        
-        DataManager.shared.getDataFromFirebaseFirstTime()
+        DataManager.shared.getDataFromFirebasePublicRecipes()
         
         if tableView.indexPathForSelectedRow != nil {
             tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
