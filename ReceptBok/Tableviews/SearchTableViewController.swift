@@ -22,7 +22,9 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("dataFetched"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("PublicDataFetched"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("imageFetched"), object: nil)
     }
     
     override func viewDidLoad() {
@@ -41,7 +43,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataManager.shared.recipesArray.count
+        return DataManager.shared.publicRecipesArray.count
     }
 
     
@@ -50,7 +52,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
 
         let recipe : ReceipeModel
-        recipe = DataManager.shared.recipesArray[indexPath.row]
+        recipe = DataManager.shared.publicRecipesArray[indexPath.row]
         
         cell.recipeNameLabel.text = recipe.receipeName
         cell.bookCoverImage.image = recipe.image
@@ -75,14 +77,14 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             findRecipesSearchBar.text = "" */
             
             // Tar ut namn, ingredienser, instruktioner och sidonummer från objektet och för över det till destinations ViewController
-            destination.namePassedOver = DataManager.shared.recipesArray[index!].receipeName
-            destination.ingredientPassedOver = DataManager.shared.recipesArray[index!].ingredients
-            destination.instructionPassedOver = DataManager.shared.recipesArray[index!].howTo
-            destination.imagePassedOver = DataManager.shared.recipesArray[index!].image
+            destination.namePassedOver = DataManager.shared.publicRecipesArray[index!].receipeName
+            destination.ingredientPassedOver = DataManager.shared.publicRecipesArray[index!].ingredients
+            destination.instructionPassedOver = DataManager.shared.publicRecipesArray[index!].howTo
+            destination.imagePassedOver = DataManager.shared.publicRecipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
-            print(DataManager.shared.recipesArray[index!].receipeName ?? "ingen information att hämta")
+            print(DataManager.shared.publicRecipesArray[index!].receipeName ?? "ingen information att hämta")
             
         }
     }

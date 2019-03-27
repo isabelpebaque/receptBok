@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class FirstScreenViewController: UIViewController {
     let vc = UITabBarController()
@@ -43,14 +44,19 @@ class FirstScreenViewController: UIViewController {
     // Action knapp som kollar data i email och password textfield om dom finns i Firebase Auth, om Ja så loggas man in och öppnar tabBarController
     @IBAction func loginButton(_ sender: UIButton) {
         
+        SVProgressHUD.show(withStatus: "Loggar in")
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
             if error == nil {
                 // Sätter user default till true så användaren hålls inloggad tills man manuellt loggar ut
                 self.userdef.set(true, forKey: "UserIsSignedIn")
                 self.userdef.synchronize()
+                SVProgressHUD.dismiss()
                 self.openMainTabBar()
+                
             } else {
                 print("Fel vid inloggning \(error.debugDescription)")
+                SVProgressHUD.dismiss()
+                SVProgressHUD.showError(withStatus: "Kunde inte logga in!")
             }
         }
     }
@@ -61,16 +67,21 @@ class FirstScreenViewController: UIViewController {
         let email = emailTextField.text!
         let password = passwordTextField.text!
         
+        SVProgressHUD.show()
         Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
             if error == nil{
                 Auth.auth().signIn(withEmail: email, password: password, completion: nil)
                 print("Kontot skapat!")
+                SVProgressHUD.dismiss()
+                SVProgressHUD.showSuccess(withStatus: "Konto Skapat!")
                 self.openMainTabBar()
                 // Sätter user default till true så användaren hålls inloggad tills man manuellt loggar ut
                 self.userdef.set(true, forKey: "UserIsSignedIn")
                 self.userdef.synchronize()
             }else {
                 print("kunde inte skapa konto! \(error.debugDescription)")
+                SVProgressHUD.dismiss()
+                SVProgressHUD.showError(withStatus: "Kunde inte skapa konto!")
             }
         }
         

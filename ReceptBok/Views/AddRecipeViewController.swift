@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import Firebase
+import SVProgressHUD
 
 class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var ref = Database.database().reference()
@@ -25,7 +26,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var recipeNameTextView: UITextView!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var instructionsTextView: UITextView!
-    @IBOutlet weak var recipeImageView: UIImageView!
+    @IBOutlet weak var recipeImageView: UIImageView?
    
     // Sätter ramarna runt textviews och startar funktionen setupKeyboardDismissRecognizer
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +128,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         
         
         if let selectedImage = selectedImageFromPicker {
-            recipeImageView.image = selectedImage
+            recipeImageView?.image = selectedImage
         }
         
         dismiss(animated: true, completion: nil)
@@ -139,9 +140,12 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         
         let storageRef = storage.child("recipesImages/\(userId!)/\(recipeNameTextView.text!).png")
         
-        let resizedImage = resizeImage(image: recipeImageView.image!, targetSize: CGSize.init(width: 500, height: 500))
+        let resizedImage = resizeImage(image: recipeImageView?.image ?? UIImage(named: "receptBok")!, targetSize: CGSize.init(width: 500, height: 500))
         
         let uploadData = resizedImage
+        
+        SVProgressHUD.show(withStatus: "Ditt recept sparas..")
+       
         if let imageData = uploadData.pngData() {
             
             storageRef.putData(imageData, metadata: nil) { (metadata, error) in
@@ -158,6 +162,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
                             print("URL är:")
                             print(url!)
                             self.addDataToFirebase()
+                            SVProgressHUD.dismiss()
                         }
                     }
                 }

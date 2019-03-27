@@ -21,6 +21,10 @@ class MyIndexTableViewController: UITableViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("dataFetched"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("imageFetched"), object: nil)
+        
+        
     }
 
     
@@ -39,7 +43,7 @@ class MyIndexTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataManager.shared.recipesArray.count
+        return DataManager.shared.privateRecipesArray.count
     }
 
     
@@ -49,7 +53,7 @@ class MyIndexTableViewController: UITableViewController {
         
         var recipe : ReceipeModel
         
-        recipe = DataManager.shared.recipesArray[indexPath.row]
+        recipe = DataManager.shared.privateRecipesArray[indexPath.row]
         cell.recipeNameLabel.text = recipe.receipeName
         cell.pageNrLabel.text = "\(String(describing: recipe.pageNr!))"
 
@@ -67,15 +71,15 @@ class MyIndexTableViewController: UITableViewController {
             let index = tableView.indexPathForSelectedRow?.row
             
             // Tar ut namn, ingredienser, instruktioner och sidonummer från objektet och för över det till destinations ViewController
-            destination.namePassedOver = DataManager.shared.recipesArray[index!].receipeName
-            destination.ingredientPassedOver = DataManager.shared.recipesArray[index!].ingredients
-            destination.instructionPassedOver = DataManager.shared.recipesArray[index!].howTo
-            destination.pageNrPassedOver = DataManager.shared.recipesArray[index!].pageNr
-            destination.imagePassedOver = DataManager.shared.recipesArray[index!].image
+            destination.namePassedOver = DataManager.shared.privateRecipesArray[index!].receipeName
+            destination.ingredientPassedOver = DataManager.shared.privateRecipesArray[index!].ingredients
+            destination.instructionPassedOver = DataManager.shared.privateRecipesArray[index!].howTo
+            destination.pageNrPassedOver = DataManager.shared.privateRecipesArray[index!].pageNr
+            destination.imagePassedOver = DataManager.shared.privateRecipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("myIndexTableViewController will pass over: ")
-            print(DataManager.shared.recipesArray[index!].receipeName!)
+            print(DataManager.shared.privateRecipesArray[index!].receipeName!)
             
         }
     }

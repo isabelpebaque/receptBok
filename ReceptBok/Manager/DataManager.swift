@@ -13,7 +13,8 @@ import Firebase
 class DataManager: NSObject {
     
     static let shared = DataManager()
-    var recipesArray = [ReceipeModel]()
+    var privateRecipesArray = [ReceipeModel]()
+    var publicRecipesArray = [ReceipeModel]()
     
     var ref : DatabaseReference!
     let userId = Auth.auth().currentUser?.uid
@@ -46,7 +47,7 @@ class DataManager: NSObject {
     func getDataFromFirebasePrivateRecipes() {
         self.ref = Database.database().reference().child("AllCookBooks").child(self.userId!).child("aCookBookName")
         
-        if self.recipesArray.count == 0 {
+        if self.privateRecipesArray.count == 0 {
             
         self.ref.observeSingleEvent(of: .value) { (snapshot) in
                 
@@ -66,7 +67,7 @@ class DataManager: NSObject {
                         imageUrlPath: image)
                     
                     
-                    self.recipesArray.append(recipePage)
+                    self.privateRecipesArray.append(recipePage)
                     self.getImageForRecipe(recipeImage: image, recipe: recipePage)
                     
                 }
@@ -94,7 +95,7 @@ class DataManager: NSObject {
                 
                     
                     //lägger till objektet i array
-                    self.recipesArray.append(recipePage)
+                    self.privateRecipesArray.append(recipePage)
                     self.getImageForRecipe(recipeImage: image ?? "", recipe: recipePage)
                     print("ChildAdded observern har lagt till receptet")
                     
@@ -107,9 +108,9 @@ class DataManager: NSObject {
     }
     
     func getDataFromFirebasePublicRecipes() {
-        self.ref = Database.database().reference().child("AllCookBooks").child("publicRecipes").child("recipesByUsers")
+        self.ref = Database.database().reference().child("publicRecipes").child("recipesByUsers")
         
-        if self.recipesArray.count == 0 {
+        if self.publicRecipesArray.count == 0 {
             
             self.ref.observeSingleEvent(of: .value) { (snapshot) in
                 
@@ -125,13 +126,13 @@ class DataManager: NSObject {
                     
                     let recipePage = ReceipeModel(receipeName: name, ingredients: ingredient, howTo: howTo, imageUrlPath: image)
                     
-                    
-                    self.recipesArray.append(recipePage)
+                    print("första nedladdningen gjord")
+                    self.publicRecipesArray.append(recipePage)
                     self.getImageForRecipe(recipeImage: image, recipe: recipePage)
                     
                 }
                 
-                NotificationCenter.default.post(name: Notification.Name("dataFetched"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name("PublicDataFetched"), object: nil)
                 
             }
         } else {
@@ -150,12 +151,12 @@ class DataManager: NSObject {
                 
                 
                 //lägger till objektet i array
-                self.recipesArray.append(recipePage)
+                self.publicRecipesArray.append(recipePage)
                 self.getImageForRecipe(recipeImage: image ?? "", recipe: recipePage)
                 print("ChildAdded observern har lagt till receptet")
                 
                 
-                NotificationCenter.default.post(name: Notification.Name("dataFetched"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name("PublicDataFetched"), object: nil)
                 
             }
             ref.removeAllObservers()
