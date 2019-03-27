@@ -21,61 +21,26 @@ class MyIndexTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        getDataFromFirebase()
+        DataManager.shared.getDataFromFirebaseFirstTime()
+        
+        if tableView.indexPathForSelectedRow != nil {
+            tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("dataFetched"), object: nil)
     }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    @objc func updateViewOnNotification() {
+        self.tableView.reloadData()
     }
     
     
-    // Mark: - Get data from Firebase
-    
-    fileprivate func getDataFromFirebase() {
-        ref = Database.database().reference().child("AllCookBooks").child(userId!).child("aCookBookName")
-        
-        var downloadedImage = UIImage()
-        // Variabel som håller koll hur många recept som hämtas från firebase som vi sedan använder som sidonummer
-        var amountOfPages = 0
-        
-        // Rensar listan så vi inte får dubbla recept i tableviewn
-        //self.amountOfRecipesArray.removeAll()
-        
-        refHandle = ref.observe(.childAdded) { (snapshot) in
-            
-            let snapshotValue = snapshot.value as! [String : AnyObject]
-            
-            let name = snapshotValue["recipeName"]!
-            let ingredient = snapshotValue["ingredients"]!
-            let howTo = snapshotValue["instructions"]!
-            let image = snapshotValue["recipeImage"]!
-            
-            let pathReference = self.storage.reference(forURL: image as! String)
-            
-            pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                if let error = error {
-                    print("hittar ingen bild")
-                    print(error.localizedDescription)
-                } else {
-                    downloadedImage = UIImage(data: data!)!
-                    print("bilden är hittad")
-                    amountOfPages += 1
-                    // skapar ett objekt med konstruktor från ReceipeModel
-                    let recipePage = ReceipeModel(receipeName: name as? String, ingredients: ingredient as? String, howTo: howTo as? String, pageNr: amountOfPages, image: downloadedImage )
-                    
-                    //lägger till objektet i array
-                    DataManager.shared.recipesArray.append(recipePage)
-                    
-                    
-                    // Uppdaterar tableview:n med data
-                    self.tableView.reloadData()
-
-                }
-            }
-        }
-        ref.removeAllObservers()
+    override func viewDidDisappear(_ animated: Bool) {
     }
     
 

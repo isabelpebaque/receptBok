@@ -23,8 +23,14 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var findRecipesSearchBar: UISearchBar!
     
     override func viewWillAppear(_ animated: Bool) {
-        getDataFromFirebase()
+       
+        DataManager.shared.getDataFromFirebaseFirstTime()
         
+        if tableView.indexPathForSelectedRow != nil {
+            tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateViewOnNotification), name: Notification.Name("dataFetched"), object: nil)
     }
     
     override func viewDidLoad() {
@@ -32,46 +38,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
     }
     
-    // Mark: - Get data from Firebase
-    
-    fileprivate func getDataFromFirebase() {
-        ref = Database.database().reference().child("publicRecipes").child("recipesByUsers")
-        var downloadedImage = UIImage()
-        self.recipeSearchArray.removeAll()
-        self.recipesArray.removeAll()
-        
-        ref.observe(.childAdded) { (snapshot) in
-            
-            let snapshotValue = snapshot.value as! Dictionary<String, String>
-            
-            let recipeName = snapshotValue["name"]!
-            let ingredient = snapshotValue["ingredients"]!
-            let howTo = snapshotValue["instructions"]!
-            let image = snapshotValue["recipeImage"]!
-            
-            let pathReference = self.storage.reference(forURL: image)
-            
-            pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                if let error = error {
-                    print("hittar ingen bild")
-                    print(error.localizedDescription)
-                } else {
-                    downloadedImage = UIImage(data: data!)!
-                    print("bilden är hittad")
-                    
-                    // skapar ett objekt med konstruktor från ReceipeModel
-                    let publicRecipe = ReceipeModel(receipeName: recipeName, ingredients: ingredient, howTo: howTo, image: downloadedImage)
-                    
-                    //lägger till objectet i array
-                    self.recipesArray.append(publicRecipe)
-                    self.recipeSearchArray = self.recipesArray
-                    
-                    // Uppdaterar tableview:n med data
-                    self.tableView.reloadData()
-                }
-            }
-        }
-       // ref.removeObserver(withHandle: refHandle)
+    @objc func updateViewOnNotification() {
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -81,7 +49,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipeSearchArray.count
+        return DataManager.shared.recipesArray.count
     }
 
     
@@ -90,7 +58,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
 
         let recipe : ReceipeModel
-        recipe = recipeSearchArray[indexPath.row]
+        recipe = DataManager.shared.recipesArray[indexPath.row]
         
         cell.recipeNameLabel.text = recipe.receipeName
         cell.bookCoverImage.image = recipe.image
@@ -110,26 +78,26 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             // Sparar vilken plats i arrayen vi skal hämta data
             let index = tableView.indexPathForSelectedRow?.row
             
-            // Tar bort keyboard från vyn och tömmer searchbaren från bokstäver
+       /*     // Tar bort keyboard från vyn och tömmer searchbaren från bokstäver
             findRecipesSearchBar.endEditing(true)
-            findRecipesSearchBar.text = ""
+            findRecipesSearchBar.text = "" */
             
             // Tar ut namn, ingredienser, instruktioner och sidonummer från objektet och för över det till destinations ViewController
-            destination.namePassedOver = self.recipeSearchArray[index!].receipeName
-            destination.ingredientPassedOver = self.recipeSearchArray[index!].ingredients
-            destination.instructionPassedOver = self.recipeSearchArray[index!].howTo
-            destination.imagePassedOver = self.recipeSearchArray[index!].image
+            destination.namePassedOver = DataManager.shared.recipesArray[index!].receipeName
+            destination.ingredientPassedOver = DataManager.shared.recipesArray[index!].ingredients
+            destination.instructionPassedOver = DataManager.shared.recipesArray[index!].howTo
+            destination.imagePassedOver = DataManager.shared.recipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("mySearchTableViewController will pass over: ")
-            print(self.recipeSearchArray[index!].receipeName ?? "ingen information att hämta")
+            print(DataManager.shared.recipesArray[index!].receipeName ?? "ingen information att hämta")
             
         }
     }
     
     // MARK: - Searchfunction
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+ /*   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             recipeSearchArray = recipesArray;
             tableView.reloadData()
@@ -140,6 +108,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             return (recipe.receipeName?.lowercased().contains(searchText.lowercased()))!
         })
         tableView.reloadData()
-    }
+    } */
     
 }

@@ -14,24 +14,29 @@ class ReceipeModel {
     var receipeName: String?
     var ingredients: String?
     var howTo: String?
-    var image: UIImage?
+    var imageUrlPath: String?
+    var image: UIImage!
     var pageNr : Int?
     
     
     // Konstruktor för användarens egna ReceipeModel
-    init(receipeName: String?, ingredients: String?, howTo: String?, pageNr : Int?, image: UIImage?) {
+    init(receipeName: String?, ingredients: String?, howTo: String?, pageNr : Int?, imageUrlPath: String?) {
         self.receipeName = receipeName
         self.ingredients = ingredients
         self.howTo = howTo
         self.pageNr = pageNr
-        self.image = image
+        self.imageUrlPath = imageUrlPath
     }
     
     //Konstruktor för sökfältets ReceipeModel
-    init(receipeName: String?, ingredients: String?, howTo: String?, image : UIImage!) {
+    init(receipeName: String?, ingredients: String?, howTo: String?, imageUrlPath : String?) {
         self.receipeName = receipeName
         self.ingredients = ingredients
         self.howTo = howTo
+        self.imageUrlPath = imageUrlPath
+    }
+    
+    init(image: UIImage?){
         self.image = image
     }
 }
