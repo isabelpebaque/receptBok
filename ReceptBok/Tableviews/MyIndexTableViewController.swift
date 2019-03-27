@@ -20,13 +20,13 @@ class MyIndexTableViewController: UITableViewController {
     let storage = Storage.storage()
     
     override func viewWillAppear(_ animated: Bool) {
+        
         getDataFromFirebase()
     }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
     }
     
@@ -35,12 +35,13 @@ class MyIndexTableViewController: UITableViewController {
     
     fileprivate func getDataFromFirebase() {
         ref = Database.database().reference().child("AllCookBooks").child(userId!).child("aCookBookName")
+        
         var downloadedImage = UIImage()
         // Variabel som håller koll hur många recept som hämtas från firebase som vi sedan använder som sidonummer
         var amountOfPages = 0
         
         // Rensar listan så vi inte får dubbla recept i tableviewn
-        self.amountOfRecipesArray.removeAll()
+        //self.amountOfRecipesArray.removeAll()
         
         refHandle = ref.observe(.childAdded) { (snapshot) in
             
@@ -65,7 +66,8 @@ class MyIndexTableViewController: UITableViewController {
                     let recipePage = ReceipeModel(receipeName: name as? String, ingredients: ingredient as? String, howTo: howTo as? String, pageNr: amountOfPages, image: downloadedImage )
                     
                     //lägger till objektet i array
-                    self.amountOfRecipesArray.append(recipePage)
+                    DataManager.shared.recipesArray.append(recipePage)
+                    
                     
                     // Uppdaterar tableview:n med data
                     self.tableView.reloadData()
@@ -73,8 +75,9 @@ class MyIndexTableViewController: UITableViewController {
                 }
             }
         }
-        //ref.removeObserver(withHandle: refHandle)
+        ref.removeAllObservers()
     }
+    
 
     // MARK: - Table view data source
 
@@ -83,7 +86,7 @@ class MyIndexTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return amountOfRecipesArray.count
+        return DataManager.shared.recipesArray.count
     }
 
     
@@ -93,7 +96,7 @@ class MyIndexTableViewController: UITableViewController {
         
         var recipe : ReceipeModel
         
-        recipe = amountOfRecipesArray[indexPath.row]
+        recipe = DataManager.shared.recipesArray[indexPath.row]
         cell.recipeNameLabel.text = recipe.receipeName
         cell.pageNrLabel.text = "\(String(describing: recipe.pageNr!))"
 
@@ -111,15 +114,15 @@ class MyIndexTableViewController: UITableViewController {
             let index = tableView.indexPathForSelectedRow?.row
             
             // Tar ut namn, ingredienser, instruktioner och sidonummer från objektet och för över det till destinations ViewController
-            destination.namePassedOver = self.amountOfRecipesArray[index!].receipeName
-            destination.ingredientPassedOver = self.amountOfRecipesArray[index!].ingredients
-            destination.instructionPassedOver = self.amountOfRecipesArray[index!].howTo
-            destination.pageNrPassedOver = self.amountOfRecipesArray[index!].pageNr
-            destination.imagePassedOver = self.amountOfRecipesArray[index!].image
+            destination.namePassedOver = DataManager.shared.recipesArray[index!].receipeName
+            destination.ingredientPassedOver = DataManager.shared.recipesArray[index!].ingredients
+            destination.instructionPassedOver = DataManager.shared.recipesArray[index!].howTo
+            destination.pageNrPassedOver = DataManager.shared.recipesArray[index!].pageNr
+            destination.imagePassedOver = DataManager.shared.recipesArray[index!].image
             
             // Kollar så vi har någon data att föra över
             print("myIndexTableViewController will pass over: ")
-            print(self.amountOfRecipesArray[index!].receipeName!)
+            print(DataManager.shared.recipesArray[index!].receipeName!)
             
         }
     }

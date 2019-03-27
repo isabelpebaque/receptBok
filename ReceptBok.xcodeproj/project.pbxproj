@@ -21,6 +21,7 @@
 		749C5F3422326AD800009B53 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C5F3322326AD800009B53 /* SearchTableViewController.swift */; };
 		749C5F3622326EFB00009B53 /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C5F3522326EFB00009B53 /* AddRecipeViewController.swift */; };
 		749C5F3822326F4800009B53 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C5F3722326F4800009B53 /* ModalViewController.swift */; };
+		749CB0E3224B729A0093C262 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749CB0E2224B729A0093C262 /* DataManager.swift */; };
 		74F3B36E2239952500EB6EC3 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F3B36D2239952500EB6EC3 /* BookTableViewCell.swift */; };
 		BF1D6AC94A911A80C63E6811 /* Pods_ReceptBok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A81FDE028A0B11042A8355B7 /* Pods_ReceptBok.framework */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		749C5F3322326AD800009B53 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		749C5F3522326EFB00009B53 /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		749C5F3722326F4800009B53 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		749CB0E2224B729A0093C262 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		74F3B36D2239952500EB6EC3 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		93C31453412C2F02532249FA /* Pods-ReceptBok.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReceptBok.release.xcconfig"; path = "Target Support Files/Pods-ReceptBok/Pods-ReceptBok.release.xcconfig"; sourceTree = "<group>"; };
 		A81FDE028A0B11042A8355B7 /* Pods_ReceptBok.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReceptBok.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 		749C5F142231B3B300009B53 /* ReceptBok */ = {
 			isa = PBXGroup;
 			children = (
+				749CB0E4224B75620093C262 /* Manager */,
 				745014F0223AC70300E97D8B /* Models */,
 				745014EF223AC6F200E97D8B /* Tableviews */,
 				745014EE223AC6DB00E97D8B /* TableCells */,
@@ -139,6 +142,14 @@
 				749C5F192231B3B300009B53 /* Main.storyboard */,
 			);
 			path = ReceptBok;
+			sourceTree = "<group>";
+		};
+		749CB0E4224B75620093C262 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				749CB0E2224B729A0093C262 /* DataManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		9472250F4146085370203BA7 /* Pods */ = {
@@ -278,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				745014EC223A7BCA00E97D8B /* IndexTableViewCell.swift in Sources */,
+				749CB0E3224B729A0093C262 /* DataManager.swift in Sources */,
 				749C5F3622326EFB00009B53 /* AddRecipeViewController.swift in Sources */,
 				745014EA223A410500E97D8B /* MyIndexTableViewController.swift in Sources */,
 				746076A2223900A600D81AEB /* ReceipeModel.swift in Sources */,
