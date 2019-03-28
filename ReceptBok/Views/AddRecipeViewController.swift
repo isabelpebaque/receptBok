@@ -11,7 +11,7 @@ import FirebaseDatabase
 import Firebase
 import SVProgressHUD
 
-class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     var ref = Database.database().reference()
     let userId = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
@@ -32,19 +32,89 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     override func viewWillAppear(_ animated: Bool) {
         setupKeyboardDismissRecognizer()
         
-        addBorderTo(textView: recipeNameTextView)
-        addBorderTo(textView: ingredientsTextView)
-        addBorderTo(textView: instructionsTextView)
+        addBorderToTextViews()
+        addPlaceholderInTextview()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        recipeNameTextView.delegate = self
+        ingredientsTextView.delegate = self
+        instructionsTextView.delegate = self
+        
     }
     
+    // Buttons
     @IBAction func addImageButtonPressed(_ sender: UIButton) {
         getImage(fromSourceType: .photoLibrary)
     }
+    
+    @IBAction func cancelButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func saveButton(_ sender: UIButton) {
+        
+        if recipeImageView?.image == nil {
+            recipeImageView?.image = UIImage(named: "noImage")
+        }
+        
+        uploadToFirestoreStorage()
+    }
+    
+    // Metod som lägger 'placeholder' i mina textViews
+    func addPlaceholderInTextview() {
+        
+        recipeNameTextView.text = "Namn på recept"
+        ingredientsTextView.text = "Vilka ingredienser behövs"
+        instructionsTextView.text = "Instruktioner för receptet"
+        
+        recipeNameTextView.textColor = UIColor.lightGray
+        ingredientsTextView.textColor = UIColor.lightGray
+        instructionsTextView.textColor = UIColor.lightGray
+    }
+    
+    // När användaren går in i en textview ändrar vi färgen till svart och tar bort placeholder texten
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        if textView == recipeNameTextView {
+            print("du klickade på recipeName textview")
+            recipeNameTextView.text = nil
+            recipeNameTextView.textColor = UIColor.black
+        } else if textView == ingredientsTextView {
+            print("du klickade på ingredients textview")
+            ingredientsTextView.text = nil
+            ingredientsTextView.textColor = UIColor.black
+        } else if textView == instructionsTextView {
+            print("du klickade på instructions textview")
+            instructionsTextView.text = nil
+            instructionsTextView.textColor = UIColor.black
+        }
+    }
+    
+    // Om användaren går ut ur textviewn utan att skrivit något i den så lägger vi på placeholder texten igen
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        if textView == recipeNameTextView {
+            if recipeNameTextView.text.isEmpty {
+                recipeNameTextView.text = "Namn på recept"
+                recipeNameTextView.textColor = UIColor.lightGray
+            }
+        } else if textView == ingredientsTextView {
+            if ingredientsTextView.text.isEmpty {
+                ingredientsTextView.text = "Vilka ingredienser behövs"
+                ingredientsTextView.textColor = UIColor.lightGray
+            }
+        } else if textView == instructionsTextView {
+            if instructionsTextView.text.isEmpty {
+                instructionsTextView.text = "Instruktioner för receptet"
+                instructionsTextView.textColor = UIColor.lightGray
+            }
+        }
+    }
+    
+    
     
     // Metod som öppnar upp fotoalbum/kamera beroende på vilken sourcetype vi väljer som parameter
     func getImage(fromSourceType sourceType: UIImagePickerController.SourceType) {
@@ -67,25 +137,24 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         view.endEditing(true)
     }
     
-    @IBAction func cancelButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+    
+    // Metod som skapar en ram runt textview
+    func addBorderToTextViews() {
+        
+        recipeNameTextView.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
+        recipeNameTextView.layer.borderWidth = 1.0
+        recipeNameTextView.layer.cornerRadius = 5
+        
+        ingredientsTextView.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
+        ingredientsTextView.layer.borderWidth = 1.0
+        ingredientsTextView.layer.cornerRadius = 5
+        
+        instructionsTextView.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
+        instructionsTextView.layer.borderWidth = 1.0
+        instructionsTextView.layer.cornerRadius = 5
     }
     
-    func addBorderTo(textView: UITextView) {
-        textView.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
-        textView.layer.borderWidth = 1.0
-        textView.layer.cornerRadius = 5
-    }
     
-    @IBAction func saveButton(_ sender: UIButton) {
-        
-        if recipeImageView?.image == nil {
-            recipeImageView?.image = UIImage(named: "noImage")
-        }
-        
-        uploadToFirestoreStorage()
-        
-    }
     
     func addDataToFirebase() {
 
@@ -108,6 +177,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
             "recipeImage":recipeImgpath
         ]
         
+        // Kollar om användaren har tryckt på switch för hemligt recept
         if secretRecipeSwitch.isOn {
             ref.child("AllCookBooks").child(userId!).child("aCookBookName").childByAutoId().setValue(newPrivateRecipe)
         } else {
@@ -139,6 +209,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         dismiss(animated: true, completion: nil)
     }
     
+    // Metod som sparar data till Firebase
     func uploadToFirestoreStorage() {
         
         let storage = self.storage.reference()
@@ -175,6 +246,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    // Metod som tar en bild och och komprimerar den vald storlek
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
         
