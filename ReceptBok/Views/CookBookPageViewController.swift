@@ -11,9 +11,6 @@ import FirebaseDatabase
 import Firebase
 
 class CookBookPageViewController: UIViewController {
-    var ref : DatabaseReference!
-    var userId = Auth.auth().currentUser?.uid
-    let storage = Storage.storage()
     
     var namePassedOver : String?
     var ingredientPassedOver : String?

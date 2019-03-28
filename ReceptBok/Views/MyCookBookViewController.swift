@@ -11,7 +11,7 @@ import FirebaseDatabase
 import Firebase
 
 class MyCookBookViewController: UIViewController {
-    //Kopplingar till Firebase/Firebase Auth
+    //Kopplingar till Firebase/userDefaults
     let ref = Database.database().reference()
     let userdef = UserDefaults.standard
     
@@ -19,13 +19,11 @@ class MyCookBookViewController: UIViewController {
     
     @IBOutlet weak var myCookBookNameTV: UITextView!
     @IBOutlet weak var myCookBookImageView: UIImageView!
-    
     @IBOutlet weak var createCookBook: UIButton!
    
 
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         getDataFromFirebase()
         
@@ -35,11 +33,13 @@ class MyCookBookViewController: UIViewController {
         
     }
     
+    // När man trycker på knappen gömmer vi createCookBook knapp och sparar detta i userDefaults
     @IBAction func createCookBookButtonPressed(_ sender: UIButton) {
         createCookBook.isHidden = true
         self.userdef.set(true, forKey: "createdCookBook")
     }
     
+    // Loggar ut användaren från firebase Auth
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
         
         do {

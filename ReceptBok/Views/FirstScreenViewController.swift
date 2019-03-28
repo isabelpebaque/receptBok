@@ -17,6 +17,7 @@ class FirstScreenViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidAppear(_ animated: Bool) {
+        super .viewDidAppear(animated)
         
         if userdef.bool(forKey: "UserIsSignedIn") {
             self.openMainTabBar()

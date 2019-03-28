@@ -30,6 +30,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
    
     // Sätter ramarna runt textviews och startar funktionen setupKeyboardDismissRecognizer
     override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
         setupKeyboardDismissRecognizer()
         
         addBorderToTextViews()
@@ -78,24 +79,13 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     // När användaren går in i en textview ändrar vi färgen till svart och tar bort placeholder texten
     func textViewDidBeginEditing(_ textView: UITextView) {
         
-        if textView == recipeNameTextView {
-            print("du klickade på recipeName textview")
-            recipeNameTextView.text = nil
-            recipeNameTextView.textColor = UIColor.black
-        } else if textView == ingredientsTextView {
-            print("du klickade på ingredients textview")
-            ingredientsTextView.text = nil
-            ingredientsTextView.textColor = UIColor.black
-        } else if textView == instructionsTextView {
-            print("du klickade på instructions textview")
-            instructionsTextView.text = nil
-            instructionsTextView.textColor = UIColor.black
-        }
+        textView.text = nil
+        textView.textColor = UIColor.black
     }
     
     // Om användaren går ut ur textviewn utan att skrivit något i den så lägger vi på placeholder texten igen
     func textViewDidEndEditing(_ textView: UITextView) {
-        
+     
         if textView == recipeNameTextView {
             if recipeNameTextView.text.isEmpty {
                 recipeNameTextView.text = "Namn på recept"
@@ -126,6 +116,7 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         self.present(picker, animated: true, completion: nil)
     }
     
+    // Metod som skapar TapGestureRecogniser, så keyboard försvinner vid tryck på vyn
     func setupKeyboardDismissRecognizer() {
         let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(AddRecipeViewController.dismissKeyboard))
@@ -155,14 +146,13 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     
-    
+    // MEtod som sparar data till firebase
     func addDataToFirebase() {
 
         name = recipeNameTextView.text
         ingredients = ingredientsTextView.text
         instructions = instructionsTextView.text
         
-        // Saving data to database
         let newPrivateRecipe = [
             "recipeName":name,
             "ingredients":ingredients,

@@ -34,9 +34,5 @@ class ReceipeModel {
         self.ingredients = ingredients
         self.howTo = howTo
         self.imageUrlPath = imageUrlPath
-    }
-    
-    init(image: UIImage?){
-        self.image = image
-    }
+    }    
 }

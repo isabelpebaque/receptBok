@@ -28,6 +28,7 @@ class ModalViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
     }
     
+    // Lägger till data till firebase
     func addDataToFirebase() {
         
         guard let currentUser = Auth.auth().currentUser else { return }

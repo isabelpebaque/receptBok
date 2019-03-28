@@ -15,6 +15,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var findRecipesSearchBar: UISearchBar!
     
     override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
        
         DataManager.shared.getDataFromFirebasePublicRecipes()
         
@@ -72,10 +73,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             // Sparar vilken plats i arrayen vi skal hämta data
             let index = tableView.indexPathForSelectedRow?.row
             
-       /*     // Tar bort keyboard från vyn och tömmer searchbaren från bokstäver
-            findRecipesSearchBar.endEditing(true)
-            findRecipesSearchBar.text = "" */
-            
             // Tar ut namn, ingredienser, instruktioner och sidonummer från objektet och för över det till destinations ViewController
             destination.namePassedOver = DataManager.shared.publicRecipesArray[index!].receipeName
             destination.ingredientPassedOver = DataManager.shared.publicRecipesArray[index!].ingredients
@@ -88,20 +85,4 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             
         }
     }
-    
-    // MARK: - Searchfunction
-    
- /*   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else {
-            recipeSearchArray = recipesArray;
-            tableView.reloadData()
-            return
-
-        }
-        recipeSearchArray = recipesArray.filter({ (recipe) -> Bool in
-            return (recipe.receipeName?.lowercased().contains(searchText.lowercased()))!
-        })
-        tableView.reloadData()
-    } */
-    
 }

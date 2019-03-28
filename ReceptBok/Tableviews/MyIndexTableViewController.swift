@@ -13,6 +13,7 @@ import Firebase
 class MyIndexTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
         
         DataManager.shared.getDataFromFirebasePrivateRecipes()
         
