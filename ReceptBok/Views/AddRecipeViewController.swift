@@ -79,7 +79,12 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     
     @IBAction func saveButton(_ sender: UIButton) {
         
+        if recipeImageView?.image == nil {
+            recipeImageView?.image = UIImage(named: "noImage")
+        }
+        
         uploadToFirestoreStorage()
+        
     }
     
     func addDataToFirebase() {
