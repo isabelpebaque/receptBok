@@ -284,17 +284,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="pRC-Os-o1A">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="nb4-Cj-TxL" id="Y1w-QR-eca"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="99" id="pjt-n8-WIl" customClass="BookTableViewCell" customModule="ReceptBok" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="99"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pjt-n8-WIl" id="4Xx-wk-RcZ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="98.5"/>
@@ -337,9 +329,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Hitta Recept" id="HwN-KB-Q3I"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="findRecipesSearchBar" destination="pRC-Os-o1A" id="6FX-M4-WUl"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zr-dv-Lfn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -631,6 +620,6 @@
         <image name="search" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LHQ-QX-7UR"/>
+        <segue reference="uOd-il-lEE"/>
     </inferredMetricsTieBreakers>
 </document>
