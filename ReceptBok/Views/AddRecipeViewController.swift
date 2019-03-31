@@ -16,6 +16,8 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
     let userId = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
     
+    var userDef = UserDefaults.standard
+    
     
     var recipeImgpath : String?
     var name : String?
@@ -34,7 +36,11 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         setupKeyboardDismissRecognizer()
         
         addBorderToTextViews()
-        addPlaceholderInTextview()
+        addPlaceholderInTextview(textView: recipeNameTextView)
+        addPlaceholderInTextview(textView: ingredientsTextView)
+        addPlaceholderInTextview(textView: instructionsTextView)
+        
+        
     }
     
     override func viewDidLoad() {
@@ -62,44 +68,54 @@ class AddRecipeViewController: UIViewController, UIImagePickerControllerDelegate
         }
         
         uploadToFirestoreStorage()
+        
     }
     
     // Metod som lägger 'placeholder' i mina textViews
-    func addPlaceholderInTextview() {
+    func addPlaceholderInTextview(textView: UITextView) {
         
-        recipeNameTextView.text = "Namn på recept"
-        ingredientsTextView.text = "Vilka ingredienser behövs"
-        instructionsTextView.text = "Instruktioner för receptet"
+        if textView.text.isEmpty {
         
-        recipeNameTextView.textColor = UIColor.lightGray
-        ingredientsTextView.textColor = UIColor.lightGray
-        instructionsTextView.textColor = UIColor.lightGray
+            recipeNameTextView.text = "Namn på recept"
+            ingredientsTextView.text = "Vilka ingredienser behövs"
+            instructionsTextView.text = "Instruktioner för receptet"
+            
+            recipeNameTextView.textColor = UIColor.lightGray
+            ingredientsTextView.textColor = UIColor.lightGray
+            instructionsTextView.textColor = UIColor.lightGray
+        }
     }
     
     // När användaren går in i en textview ändrar vi färgen till svart och tar bort placeholder texten
     func textViewDidBeginEditing(_ textView: UITextView) {
         
-        textView.text = nil
-        textView.textColor = UIColor.black
+        if textView.textColor == UIColor.lightGray{
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+        
     }
     
     // Om användaren går ut ur textviewn utan att skrivit något i den så lägger vi på placeholder texten igen
     func textViewDidEndEditing(_ textView: UITextView) {
+        
+        if textView.text.isEmpty {
      
-        if textView == recipeNameTextView {
-            if recipeNameTextView.text.isEmpty {
-                recipeNameTextView.text = "Namn på recept"
-                recipeNameTextView.textColor = UIColor.lightGray
-            }
-        } else if textView == ingredientsTextView {
-            if ingredientsTextView.text.isEmpty {
-                ingredientsTextView.text = "Vilka ingredienser behövs"
-                ingredientsTextView.textColor = UIColor.lightGray
-            }
-        } else if textView == instructionsTextView {
-            if instructionsTextView.text.isEmpty {
-                instructionsTextView.text = "Instruktioner för receptet"
-                instructionsTextView.textColor = UIColor.lightGray
+            if textView == recipeNameTextView {
+                if recipeNameTextView.text.isEmpty {
+                    recipeNameTextView.text = "Namn på recept"
+                    recipeNameTextView.textColor = UIColor.lightGray
+                }
+            } else if textView == ingredientsTextView {
+                if ingredientsTextView.text.isEmpty {
+                    ingredientsTextView.text = "Vilka ingredienser behövs"
+                    ingredientsTextView.textColor = UIColor.lightGray
+                }
+            } else if textView == instructionsTextView {
+                if instructionsTextView.text.isEmpty {
+                    instructionsTextView.text = "Instruktioner för receptet"
+                    instructionsTextView.textColor = UIColor.lightGray
+                }
             }
         }
     }
