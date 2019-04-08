@@ -17,7 +17,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
        
-        DataManager.shared.getDataFromFirebasePublicRecipes()
+        
         
         if tableView.indexPathForSelectedRow != nil {
             tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
@@ -30,6 +30,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.shared.getDataFromFirebasePublicRecipes()
         
     }
     

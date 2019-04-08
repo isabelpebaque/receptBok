@@ -15,8 +15,6 @@ class MyIndexTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
-        DataManager.shared.getDataFromFirebasePrivateRecipes()
-        
         if tableView.indexPathForSelectedRow != nil {
             tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
         }
@@ -31,6 +29,7 @@ class MyIndexTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.shared.getDataFromFirebasePrivateRecipes()
     }
     
     @objc func updateViewOnNotification() {
